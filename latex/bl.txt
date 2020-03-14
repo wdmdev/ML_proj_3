@@ -1,0 +1,1 @@
+Best lambda (std): 0.1778

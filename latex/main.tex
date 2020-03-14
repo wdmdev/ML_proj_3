@@ -1,0 +1,119 @@
+% !TeX spellcheck = en_GB
+\documentclass[11pt,fleqn]{article}
+
+%packages
+\usepackage{SpeedyGonzales}
+\usepackage{MediocreMike}
+\usepackage{Blastoise}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\title{Recap - Clustering, Anomaly Detection, and Association Mining}
+\author{Asger Schultz, s183912\\
+	Rasmus Bryld, s183898\\
+	William Marstrand, s183921}
+\date{\today}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Technical University of Denmark \\
+	Asger Schultz, Rasmus Bryld, William Marstrand}
+\chead{}
+\rhead{Course: 02450}
+\rfoot{Side \thepage{} af \pageref{LastPage}}
+
+\graphicspath{{Billeder/}}
+\linespread{1}
+\geometry{top=1.5cm, bottom=1.5cm}
+
+\newcommand{\respdist}[3]{
+	\vspace*{-.5cm}
+	\begin{table}[H]
+		\small
+		\begin{tabular}{l r}
+			\multicolumn{2}{l}{\textbf{Responsibility distribution}}	\\
+			Asger Schultz&	#1\pro\\
+			Rasmus Bryld&	#2\pro\\
+			William Marstrand&#3\pro
+		\end{tabular}
+	\end{table}
+	\vspace*{-.3cm}
+}
+
+%variable semantics
+\newcommand{\var}[1]{\textbf{#1}}
+
+%\numberwithin{equation}{section}
+\numberwithin{footnote}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+
+\begin{document}
+%Front page and table of contents
+\maketitle
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=(\textwidth/2)]{DTU_logo}
+\end{figure}
+\thispagestyle{empty}
+\clearpage
+
+\tableofcontents
+\thispagestyle{empty}
+
+\paragraph{Notes on code and data} All source code files will be included along with the report. The full project, including data, is freely available at \url{https://gitlab.gbar.dtu.dk/s183921/skynet-3}. The data can also be fetched from \url{www.noegletal.dk} by downloading all available data as a \code{.csv} file. However, we recommend getting the data from the file \code{src/full\_noegletal.csv}, partially to ensure the data is the same, and partially to prevent encoding issues, as the \code{.csv} file from \url{www.noegletal.dk} is not \code{utf-8} encoded.
+
+\clearpage
+\setcounter{page}{1}
+%Sections
+\section{Introduction}
+\input{introduction.tex}
+
+\section{Clustering}
+\input{clustering.tex}
+
+\section{Anomaly Detection}
+\input{anomaly_detection.tex}
+
+\section{Association Mining}
+\input{association.tex}
+
+\section{Discussion}
+One of the first things we discovered using clustering was that our data did not work too well with clustering, as there is often no clearly separated clusters. Furthermore, because all features were continuous, our chosen target classes were rather arbitrary.
+\\\\
+Looking at the clustering using Gaussian Mixture Models, the results indicate that even though we have chosen a binary classification of our data, as below and above mean \textbf{RT}, the data might consists of more classes than just those two. This seems like a fair point, as we could probably imagine municipality burglary ratings (\textbf{RT}) to be distributed in smaller groups across a spectrum rather than just two fit neatly into two boxes above and below the mean. For the sake of this report the harsh split at the mean did the job. But, was this report to be taken any further it  would demand an investigation of multiple possible groups, maybe using the clusters identified by the GMM in this report as a starting point.
+\\
+Also, the report found that the cv-type of the GMM could be worth looking into. During the work, we found that changing the cv-type led to changes in the shape of the covariance matrix, which brought with it new challenges when performing the matrix calculations. Therefore, due to the scope of the report and a time limit, we chose to leave this extra work as a possible future investigation.
+\\
+The quality evaluations of the GMM all showed that the GMM did a fairly poor job of clustering the data according to the binary labels, that we provided. This might be the model parameters, that could be tuned even better or the quality of the data. Also, part of the reason could most likely be, that the labelling into binary classes done by us is not a great fit for the data. As explained above, a binary view on the municipality data might be to simplistic and we maybe should have tried to make more classes instead.
+\\\\
+With regards to anomaly detection, we found that Gaussian Kernel Density Estimation found quite a lot of significant outliers, whereas the two other methods tested produced no significant outliers. This indicates that, at least in this case, the KDE method is more aggressive. Arguably the ARD method is the best -- in theory for one thing, but also because it seems to fit very well with figure \ref{fig:PCA}. No exceptional outliers, yet lots of observations could still be considered well outside a cluster.
+
+\clearpage
+\begin{thebibliography}{9}
+	\bibitem{bog} Herlau, Tue et al.: "Introduction to Machine Learning and Data Mining", version 1.3.
+	\bibitem{skynet1} Schultz, Asger et al.: "Feature Extraction and Visualization"\\
+	Available at: \code{https://gitlab.gbar.dtu.dk/s183912/skynet}
+	\bibitem{skynet2} Schultz, Asger et al.: "Supervised Learning: Classification and Regression"\\
+	Available at: \code{https://gitlab.gbar.dtu.dk/s183912/skynet-2}
+\end{thebibliography}
+
+\appendix
+\section{Chosen attributes}\label{app:attrs}
+For this report we used the following features from the dataset:
+\begin{itemize}
+	\item[-] (RT) Anmeldte tyverier/indbrud pr. 1.000 indb. (Reported thefts/burglaries per 1,000 inhabitants)
+	\item[-] (PV) Grundværdier pr. indb. (Property values per inhabitant)
+	\item[-] (TA) Beskatningsgrundlag pr. indb. (Taxable amount per inhabitant)
+	\item[-] (GD) Udg. (brutto) til dagtilbud pr. indb. (Gross daycare expenses per inhabitant)
+	\item[-] (VE) Andel 25-64-årige uden erhvervsuddannelse (Share of 25-64 year-olds without vocational education)
+	\item[-] (TE) Andel 25-64-årige med videregående uddannelse (Share of 25-64 year-olds with tertiary education)
+	\item[-] (PS) Udg. til folkeskoleområdet pr. indb. (Expenses towards public primary school per inhabitant)
+	\item[-] (NW) Statsborgere fra ikke-vestlige lande pr. 10.000 indb. (Citizens from non-western countries per 10,000 inhabitants)
+	\item[-] (JA) Udg. til aktivering pr. 17-64/66-årig (Expenses towards job activation per 17-64/66 year-old)
+\end{itemize}
+
+
+\end{document}

@@ -1,0 +1,9 @@
+Association mining was done on the 8 attributes, with the apriori algorithm.
+The support was set very low, at 0.25, with a confidence of 0.6, to give any rules.
+The 3 rules with highest support, two of which were mutually dependent, are listed below: \\
+R1: GD $ \rightarrow $ PS  (supp: 0.288, conf: 0.651)
+(PS $ \rightarrow $ GD  (supp: 0.288, conf: 0.620) ) \\
+R2: JA $ \rightarrow $ VE  (supp: 0.288, conf: 0.611)  \\
+R3: NW $ \rightarrow $ GD  (supp: 0.278, conf: 0.713) (GD $ \rightarrow $ NW  (supp: 0.278, conf: 0.628) ) \\
+Rule 1 and 3 suggests that if a municipality has above mean Gross Daycare expenses, this municipality will also have above mean expenses towards Public primary School and more citizens from Non-Western countries (and the other way around with both). The first rule is quite logical, as a municipality with a high number of children, would benefit from both high expenses towards daycare and primary school in no specifik order. On top of that, any preference among citizens and politicians for high expenses in one field would likely result in the same preference for the other. Why an above mean number of non-western citizens is accompanied above mean daycare expenses is not as easy to interpret, but could be explained by non-western women having more children than women born in Denmark\footnote{https://www.dst.dk/Site/Dst/Udgivelser/nyt/GetPdf.aspx?cid=28498}.\\
+According to rule 2, high expenses towards Job Activation is followed by a bigger share of 25-64 year-olds without Vocational Education. This is compatible with the idea that higher education generally leads to easier employment and vice versa. High expenses in job activation could naturally be a consequence of low employment rates.

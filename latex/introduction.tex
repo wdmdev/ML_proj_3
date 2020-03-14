@@ -1,0 +1,15 @@
+% !TeX spellcheck = en_GB
+The purpose of this report is to perform clustering, anomaly detection, and association mining on a dataset consisting of key figures from Danish municipalities from 1993-2019.
+Previous reports have been written on this dataset focusing on visualization \cite{skynet1} and supervised learning \cite{skynet2}.
+Especially the first of these reports is relevant, as the Principal Component Analysis performed there will be referenced later on in this report.
+
+\subsection{Dataset}
+As mentioned the dataset consists of key figures from Danish municipalities from 1993-2019.
+Because the figures from before 2007 are not strictly comparable to those from 2007 and later, we used only data from 2007-2018\footnote{Data from 2019 is largely incomplete and was therefore not used.}.
+About 4\pro\ of the remaining values are missing and were estimated using linear regression, described more thoroughly in \cite{skynet2}.
+We only used the features described in \cite{skynet1} -- see appendix \ref{app:attrs} for a full list.
+For our input data, we used the last eight features.
+Our target feature was an estimate of whether the record was above or below the mean of Reported thefts/burglaries per 1,000 inhabitants) (\textbf{RT}), which will be described more in the \textit{Clustering} subsection. These target values were only used for comparison with the outputs of the different algorithms, as the main purpose of this report was unsupervised learning, which does not depend on target values.
+\\
+All data was standardized before being used, as the different features have significantly different scales.
+

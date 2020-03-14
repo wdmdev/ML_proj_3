@@ -1,0 +1,15 @@
+----- Quality Check of GMM 1 to 30 components----- 
+
+    Rand index score: 0.5125658265331962 
+
+    Jaccard similarity score: 0.11132711900604264 
+
+    Normalized Mutual Information score: 0.08118995950534755
+
+----- Quality Check of GMM 1 to 2 components----- 
+
+    Rand index score: 0.5630392952318937 
+
+    Jaccard similarity score: 0.4112678802282913 
+
+    Normalized Mutual Information score: 0.11482413218698861
